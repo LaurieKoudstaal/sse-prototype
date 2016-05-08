@@ -1,0 +1,22 @@
+{
+  "name": "sse-prototype",
+  "version": "0.0.1",
+  "description": "Server-sent event prototype",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lkoudstaal/sse-prototype.git"
+  },
+  "author": "Laurie Koudstaal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lkoudstaal/sse-prototype/issues"
+  },
+  "homepage": "https://github.com/lkoudstaal/sse-prototype#readme",
+  "dependencies": {
+    "express": "^4.13.4"
+  }
+}
