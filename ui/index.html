@@ -6,14 +6,14 @@
     <canvas id="mycanvas" width="400" height="100"></canvas>
     <script type="text/javascript">
       var smoothie = new SmoothieChart();
-      smoothie.streamTo(document.getElementById("mycanvas"), 5000);
+      smoothie.streamTo(document.getElementById("mycanvas"), 1000);
 
       var avgload = new TimeSeries();
       
       var source = new EventSource('/update-stream');
 
       source.addEventListener('message', function(e) {
-      line1.append(new Date().getTime(), e.data);
+          avgload.append(new Date().getTime(), e.data);
       }, false);
       
       smoothie.addTimeSeries(avgload);
