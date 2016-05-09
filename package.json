@@ -18,6 +18,6 @@
   "homepage": "https://github.com/lkoudstaal/sse-prototype#readme",
   "dependencies": {
     "express": "^4.13.4",
-    "redis": "^2.5.3"
+    "node-watch": "^0.3.5"
   }
 }

@@ -1,12 +1,13 @@
 #!/usr/bin/env python
-
-import redis
 import psutil
 import time
+import tempfile
 
-r = redis.StrictRedis(host='localhost', port=6379, db=0)
-
-
-while True:
-    r.publish('cpupercent', psutil.cpu_percent())
-    time.sleep(1)
+with tempfile.NamedTemporaryFile('wt') as t:
+    print(t.name)
+    while True:
+        t.seek(0)
+        t.truncate()
+        t.write('{}\n'.format(psutil.cpu_percent()))
+        t.flush()
+        time.sleep(1)
