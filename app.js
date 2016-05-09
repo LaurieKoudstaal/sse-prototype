@@ -2,6 +2,7 @@ var express = require('express');
 var os = require('os');
 var events = require('events');
 var util = require('util');
+var redis = require('redis');
 
 var app = express();
 
@@ -33,28 +34,27 @@ app.get('/update-stream', function(req, res) {
 
     // Message count will be our ID.
     var messageCount = 0;
+    
+    var subscriber = redis.createClient(6379,'localhost');
+    subscriber.subscribe('cpupercent');
+    
+    subscriber.on("error", function(err) {
+        console.log("Redis Error: " + err);
+    });
 
-    // create a callback to send the sse and listen to our event
-    callback = function(loadavg) {
+    subscriber.on("message", function(channel, message) {
         messageCount++;
         res.write('id: ' + messageCount + '\n');
-        res.write("data: " + loadavg + '\n\n'); // Note the extra newline
-    }
-    emitter.on('update', callback);
+        res.write("data: " + message + '\n\n'); // Note the extra newline
+    });
 
     // When the browser is closed, a 'close' event is triggered
     // when that happens, we remove the listener
     req.on("close", function() {
         console.log('Browser closed.');
-        emitter.removeListener('update', callback);
+        subscriber.unsubscribe();
+        subscriber.quit();
     });
 });
-
-// Every 1 second, send the os.loadavg
-// In real world uses, you'd probably want to use a push-based
-// approach, not polling.
-setInterval(function() {
-    emitter.emit('update',os.loadavg()[0]);
-}, 1000);
 
 app.listen(3000);
