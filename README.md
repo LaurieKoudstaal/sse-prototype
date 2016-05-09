@@ -15,6 +15,8 @@ Prototyping Server Sent Events in Node
 git clone git@github.com:lkoudstaal/sse-prototype.git sse-prototype
 cd sse-prototype
 npm install
+pip install redis
+pip install psutil
 ./datasource.py &
 node app.js &
 ```
